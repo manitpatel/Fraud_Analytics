@@ -22,8 +22,6 @@ table(Fraud_data$type)
 #We find that of the five types of transactions, fraud occurs only in two of them 'TRANSFER' where money is sent to a customer / fraudster and 'CASH_OUT' where money is sent to a merchant who pays the customer / fraudster in cash. 
 #Remarkably, the number of fraudulent TRANSFERs almost equals the number of fraudulent CASH_OUTs
 
-
-
 #Univariate analysis: isFlaggedFraud
 
 table(Credit_Fraud_Data$isFlaggedFraud)
@@ -56,12 +54,7 @@ Flagged_Transfer_amount=Credit_Fraud_Data[Credit_Fraud_Data$type=="TRANSFER" & C
 #Conclusion: Although isFraud is always set when isFlaggedFraud is set, since isFlaggedFraud is set just 16 times in a seemingly meaningless way, we can treat this feature as insignificant and discard it in the dataset without loosing information.
 
 
-
-
-
-##### Creating a balanced Data of the frauds ######
-
-
+##### Creating a balanced Data of the frauds 
 
 # randomly selecting 500000 rows which are not fraud and combining them with all 8000 frauds. So it is a small and balanced dataset to do analysis
 library(dplyr)
@@ -91,7 +84,7 @@ table(Final_balanced_data$isFraud)
 
 
 
-#Feature Engineering####
+#Feature Engineering
 
 Final_balanced_data$ORI_AMT= Final_balanced_data$oldbalanceOrg/Final_balanced_data$amount
 
@@ -131,9 +124,7 @@ print(AUC@y.values)
 
 
 
-###### MODEL 2 : DECISION TREES ##############################
-
-
+###### MODEL 2 : DECISION TREES 
 library(rpart)
 library(rpart.plot)
 
@@ -160,8 +151,7 @@ print(AUC@y.values)
 
 
 
-########### MODEL 3: Bagging  #####
-
+#MODEL 3: Bagging
 
 #load libraries 
 library(data.table)
@@ -213,7 +203,7 @@ r <- resample(learner = bag.lrn , task = traintask, resampling = rdesc, measures
 #With 100 trees, bagging has returned an accuracy of 77%
 
 
-############Model 4: Random Forest #############
+####Model 4: Random Forest ########
 
 library(randomForest)
 
@@ -231,7 +221,7 @@ table(Test$isFraud, predicted > 0.5)
 
 
 
-###################################  Checking amount as a predictor ###############################
+# Checking amount as a predictor 
 
 mean(Fraud_data$amount)
 mean(Credit_Fraud_Data$amount)
@@ -242,8 +232,7 @@ min(Fraud_data$amount)
 
 
 
-########################## K-means segmentation of Fraud Data ################################
-
+## K-means segmentation of Fraud Data 
 #only keeping required data in new dataset
 
 cluster_data= Fraud_data[, -c(1,4,7,10,11,12,13)]
